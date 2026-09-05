@@ -1,0 +1,260 @@
+* {
+  box-sizing: border-box;
+}
+
+.admin-doctors-page {
+  min-height: 100vh;
+  padding: 38px 4%;
+  background: #f3f7fb;
+  color: #10233f;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.admin-doctors-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.admin-doctors-header span {
+  color: #087f5b;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+}
+
+.admin-doctors-header h1 {
+  margin: 8px 0 5px;
+  font-size: 38px;
+}
+
+.admin-doctors-header p {
+  margin: 0;
+  color: #6e7d91;
+}
+
+.admin-doctors-header button {
+  padding: 11px 15px;
+  border: 1px solid #cbd7e2;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #173f62;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-doctors-layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.admin-doctor-form,
+.admin-doctors-list-section {
+  border: 1px solid #dfe8ef;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 11px 28px rgba(16, 35, 63, 0.07);
+}
+
+.admin-doctor-form {
+  padding: 23px;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-doctor-form h2 {
+  margin: 0 0 20px;
+}
+
+.admin-doctor-form label {
+  margin: 0 0 7px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.admin-doctor-form input {
+  min-height: 43px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #cbd7e2;
+  border-radius: 9px;
+  outline: none;
+}
+
+.admin-doctor-form input:focus {
+  border-color: #087f5b;
+  box-shadow: 0 0 0 4px rgba(8, 127, 91, 0.1);
+}
+
+.admin-doctor-time-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+
+.admin-doctor-time-grid div {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-doctor-save,
+.admin-doctor-cancel-edit {
+  min-height: 45px;
+  border-radius: 9px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.admin-doctor-save {
+  border: none;
+  background: linear-gradient(135deg, #087f5b, #10a979);
+  color: #ffffff;
+}
+
+.admin-doctor-cancel-edit {
+  margin-top: 10px;
+  border: 1px solid #ccd7e2;
+  background: #ffffff;
+  color: #173f62;
+}
+
+.admin-doctors-list-section {
+  padding: 23px;
+  min-width: 0;
+}
+
+.admin-doctors-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 17px;
+  margin-bottom: 20px;
+}
+
+.admin-doctors-toolbar h2 {
+  margin: 0;
+}
+
+.admin-doctors-toolbar p {
+  margin: 5px 0 0;
+  color: #7a8798;
+  font-size: 12px;
+}
+
+.admin-doctors-toolbar input {
+  width: min(320px, 100%);
+  min-height: 42px;
+  padding: 10px 13px;
+  border: 1px solid #cbd7e2;
+  border-radius: 9px;
+  outline: none;
+}
+
+.admin-doctors-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-doctors-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-doctors-table th,
+.admin-doctors-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e4ebf1;
+  text-align: left;
+  vertical-align: top;
+}
+
+.admin-doctors-table th {
+  background: #f5f9fc;
+  color: #5e6e82;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.admin-doctors-table td {
+  font-size: 13px;
+}
+
+.admin-doctors-table td strong,
+.admin-doctors-table td span,
+.admin-doctors-table td small {
+  display: block;
+}
+
+.admin-doctors-table td span,
+.admin-doctors-table td small {
+  margin-top: 4px;
+  color: #788699;
+}
+
+.admin-doctor-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.admin-doctor-actions button {
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-doctor-actions button:first-child {
+  border: 1px solid #8dcdb7;
+  background: #effaf6;
+  color: #087f5b;
+}
+
+.admin-doctor-actions button:last-child {
+  border: 1px solid #ffc9c9;
+  background: #fff2f2;
+  color: #c92a2a;
+}
+
+.admin-doctors-error {
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 9px;
+  background: #fff2f2;
+  color: #c92a2a;
+}
+
+.admin-doctors-empty {
+  padding: 35px;
+  text-align: center;
+  color: #718096;
+}
+
+@media (max-width: 1050px) {
+  .admin-doctors-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .admin-doctors-page {
+    padding: 28px 17px;
+  }
+
+  .admin-doctors-header,
+  .admin-doctors-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-doctors-header button,
+  .admin-doctors-toolbar input {
+    width: 100%;
+  }
+
+  .admin-doctor-time-grid {
+    grid-template-columns: 1fr;
+  }
+}
