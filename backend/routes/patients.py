@@ -4,7 +4,11 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import Patient
 from schemas import PatientCreate, PatientResponse
-from security import get_current_patient, hash_password
+from security import (
+    get_current_patient,
+    get_current_admin,
+    hash_password,
+)
 
 
 router = APIRouter(
