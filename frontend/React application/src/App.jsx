@@ -1,3 +1,4 @@
+import AdminAppointments from "./pages/AdminAppointments";
 import {
   BrowserRouter,
   Navigate,
@@ -5,10 +6,15 @@ import {
   Routes,
 } from "react-router-dom";
 
+import AdminQueue from "./pages/AdminQueue";
+
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminDoctors from "./pages/AdminDoctors";
+import AdminPatients from "./pages/AdminPatients";
 import AdminLogin from "./pages/AdminLogin";
+
 import BookAppointment from "./pages/BookAppointment";
 import Dashboard from "./pages/Dashboard";
 import Doctors from "./pages/Doctors";
@@ -17,8 +23,8 @@ import Login from "./pages/Login";
 import MyAppointments from "./pages/MyAppointments";
 import Queue from "./pages/Queue";
 import Register from "./pages/Register";
-import AdminDoctors from "./pages/AdminDoctors";
 
+// Protect admin pages
 function AdminProtectedRoute({ children }) {
   const adminToken = localStorage.getItem(
     "admin_access_token"
@@ -40,11 +46,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public routes */}
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        {/* PUBLIC ROUTES */}
+
+        <Route path="/" element={<Home />} />
 
         <Route
           path="/patient-login"
@@ -61,7 +65,8 @@ function App() {
           element={<AdminLogin />}
         />
 
-        {/* Patient protected routes */}
+        {/* PATIENT PROTECTED ROUTES */}
+
         <Route
           path="/dashboard"
           element={
@@ -107,7 +112,26 @@ function App() {
           }
         />
 
-        {/* Admin protected routes */}
+        <Route
+  path="/admin/queue"
+  element={
+    <AdminProtectedRoute>
+      <AdminQueue />
+    </AdminProtectedRoute>
+  }
+/>
+
+        <Route
+  path="/admin/appointments"
+  element={
+    <AdminProtectedRoute>
+      <AdminAppointments />
+    </AdminProtectedRoute>
+  }
+/>
+
+        {/* ADMIN PROTECTED ROUTES */}
+
         <Route
           path="/admin/dashboard"
           element={
@@ -118,23 +142,30 @@ function App() {
         />
 
         <Route
-  path="/admin/doctors"
-  element={
-    <AdminProtectedRoute>
-      <AdminDoctors />
-    </AdminProtectedRoute>
-  }
-/>
+          path="/admin/doctors"
+          element={
+            <AdminProtectedRoute>
+              <AdminDoctors />
+            </AdminProtectedRoute>
+          }
+        />
 
-        {/* Unknown routes */}
+        {/* NEW: ADMIN PATIENT MANAGEMENT */}
+
+        <Route
+          path="/admin/patients"
+          element={
+            <AdminProtectedRoute>
+              <AdminPatients />
+            </AdminProtectedRoute>
+          }
+        />
+
+        {/* UNKNOWN ROUTES */}
+
         <Route
           path="*"
-          element={
-            <Navigate
-              to="/"
-              replace
-            />
-          }
+          element={<Navigate to="/" replace />}
         />
       </Routes>
     </BrowserRouter>

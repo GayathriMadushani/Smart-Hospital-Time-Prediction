@@ -6,8 +6,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import Appointment, Doctor, Patient, Queue
 from schemas import AppointmentBookingCreate, AppointmentResponse
-from security import get_current_patient
-
+from security import get_current_patient, get_current_admin
 
 router = APIRouter(
     prefix="/appointments",
@@ -218,3 +217,26 @@ def cancel_my_appointment(
         "appointment_id": appointment.appointment_id,
         "status": appointment.status,
     }
+
+# ---------------------------------------
+# ADMIN - GET ALL APPOINTMENTS
+# ---------------------------------------
+
+@router.get(
+    "",
+    response_model=list[AppointmentResponse],
+)
+def get_all_appointments(
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin),
+):
+    appointments = (
+        db.query(Appointment)
+        .order_by(
+            Appointment.appointment_date.desc(),
+            Appointment.appointment_time.desc(),
+        )
+        .all()
+    )
+
+    return appointments

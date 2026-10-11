@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -16,6 +17,10 @@ router = APIRouter(
     tags=["Patients"],
 )
 
+
+# ---------------------------------------
+# 1. REGISTER A NEW PATIENT
+# ---------------------------------------
 
 @router.post(
     "",
@@ -59,13 +64,36 @@ def create_patient(
         raise
 
 
+# ---------------------------------------
+# 2. GET LOGGED-IN PATIENT PROFILE
+# ---------------------------------------
+
 @router.get(
     "/me",
     response_model=PatientResponse,
 )
 def get_my_profile(
-    current_patient: Patient = Depends(
-        get_current_patient
-    ),
+    current_patient: Patient = Depends(get_current_patient),
 ):
     return current_patient
+
+
+# ---------------------------------------
+# 3. ADMIN - GET ALL PATIENTS
+# ---------------------------------------
+
+@router.get(
+    "",
+    response_model=list[PatientResponse],
+)
+def get_all_patients(
+    db: Session = Depends(get_db),
+    current_admin=Depends(get_current_admin),
+):
+    patients = (
+        db.query(Patient)
+        .order_by(Patient.patient_id.desc())
+        .all()
+    )
+
+    return patients
