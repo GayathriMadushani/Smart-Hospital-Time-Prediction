@@ -9,6 +9,7 @@ import {
 import AdminQueue from "./pages/AdminQueue";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminAIAnalytics from "./pages/AdminAIAnalytics";
 
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminDoctors from "./pages/AdminDoctors";
@@ -160,6 +161,14 @@ function App() {
             </AdminProtectedRoute>
           }
         />
+        <Route
+  path="/admin/analytics"
+  element={
+    <AdminProtectedRoute>
+      <AdminAIAnalytics />
+    </AdminProtectedRoute>
+  }
+/>
 
         {/* UNKNOWN ROUTES */}
 

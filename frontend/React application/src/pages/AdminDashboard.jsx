@@ -171,6 +171,13 @@ export default function AdminDashboard() {
             <span>#</span>
             Queue Management
           </button>
+          <button
+  type="button"
+  onClick={() => navigate("/admin/analytics")}
+>
+  <span>◈</span>
+  AI Analytics
+</button>
         </nav>
 
         <button
@@ -388,10 +395,30 @@ export default function AdminDashboard() {
                   </small>
                 </section>
 
-                <b>→</b>
+                                             <b>→</b>
               </button>
-            </div>
-          </article>
+
+              {/* AI Analytics Quick Action */}
+              <button
+                type="button"
+                onClick={() => navigate("/admin/analytics")}
+              >
+                <span>◈</span>
+
+                <section>
+                  <strong>AI Prediction Analytics</strong>
+
+                  <small>
+                    View waiting time and consultation time
+                    prediction model performance
+                  </small>
+                </section>
+
+                <b>→</b>
+                     <b>→</b>
+      </button>
+    </div>
+  </article>
 
           <article className="admin-profile-card">
             <div className="admin-section-heading">

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import Base, engine
+from routes import admin_analytics
 
 from routes import (
     admin_auth,
@@ -44,6 +45,7 @@ app.include_router(queue.router)
 app.include_router(predictions.router)
 app.include_router(admin_auth.router)
 app.include_router(admin_dashboard.router)
+app.include_router(admin_analytics.router)
 
 
 @app.get("/")

@@ -3,7 +3,12 @@ from pathlib import Path
 import joblib
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import (
+    mean_absolute_error,
+    mean_squared_error,
+    r2_score,
+)
+import numpy as np
 from sklearn.model_selection import train_test_split
 
 
@@ -135,3 +140,35 @@ print(
     "Saved:",
     CONSULTATION_MODEL_PATH.name,
 )
+
+waiting_rmse = np.sqrt(
+    mean_squared_error(y_wait_test, waiting_predictions)
+)
+
+waiting_r2 = r2_score(
+    y_wait_test, waiting_predictions
+)
+
+consultation_rmse = np.sqrt(
+    mean_squared_error(
+        y_consult_test,
+        consultation_predictions
+    )
+)
+
+consultation_r2 = r2_score(
+    y_consult_test,
+    consultation_predictions
+)
+
+print("\n===== AI MODEL EVALUATION =====")
+
+print("\nWaiting Time Model")
+print("MAE:", round(waiting_mae, 2))
+print("RMSE:", round(waiting_rmse, 2))
+print("R2 Score:", round(waiting_r2, 4))
+
+print("\nConsultation Time Model")
+print("MAE:", round(consultation_mae, 2))
+print("RMSE:", round(consultation_rmse, 2))
+print("R2 Score:", round(consultation_r2, 4))
