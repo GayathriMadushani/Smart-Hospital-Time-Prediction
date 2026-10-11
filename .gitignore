@@ -27,6 +27,12 @@ build/
 .DS_Store
 Thumbs.db
 
-backend/security.py
+
 backend/.env
 .env
+
+# Protect private files
+passwords.txt
+.env
+.env.*
+!.env.example
