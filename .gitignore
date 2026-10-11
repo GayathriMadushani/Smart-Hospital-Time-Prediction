@@ -26,3 +26,7 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+backend/security.py
+backend/.env
+.env
