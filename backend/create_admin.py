@@ -1,8 +1,11 @@
 import os
+from dotenv import load_dotenv
 
 from database import SessionLocal
 from models import Admin
 from security import hash_password
+
+load_dotenv()
 
 admin_email = os.getenv("ADMIN_EMAIL")
 admin_password = os.getenv("ADMIN_PASSWORD")
