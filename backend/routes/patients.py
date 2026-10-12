@@ -1,6 +1,7 @@
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
 from database import get_db
 from models import Patient
@@ -11,16 +12,11 @@ from security import (
     hash_password,
 )
 
-
 router = APIRouter(
     prefix="/patients",
     tags=["Patients"],
 )
 
-
-# ---------------------------------------
-# 1. REGISTER A NEW PATIENT
-# ---------------------------------------
 
 @router.post(
     "",
@@ -31,9 +27,11 @@ def create_patient(
     data: PatientCreate,
     db: Session = Depends(get_db),
 ):
+    email = data.email.strip().lower()
+
     existing_patient = (
         db.query(Patient)
-        .filter(Patient.email == data.email)
+        .filter(func.lower(Patient.email) == email)
         .first()
     )
 
@@ -48,7 +46,7 @@ def create_patient(
         age=data.age,
         gender=data.gender,
         phone=data.phone,
-        email=data.email,
+        email=email,
         password=hash_password(data.password),
     )
 
@@ -56,17 +54,12 @@ def create_patient(
         db.add(patient)
         db.commit()
         db.refresh(patient)
-
         return patient
 
     except Exception:
         db.rollback()
         raise
 
-
-# ---------------------------------------
-# 2. GET LOGGED-IN PATIENT PROFILE
-# ---------------------------------------
 
 @router.get(
     "/me",
@@ -78,10 +71,6 @@ def get_my_profile(
     return current_patient
 
 
-# ---------------------------------------
-# 3. ADMIN - GET ALL PATIENTS
-# ---------------------------------------
-
 @router.get(
     "",
     response_model=list[PatientResponse],
@@ -90,10 +79,8 @@ def get_all_patients(
     db: Session = Depends(get_db),
     current_admin=Depends(get_current_admin),
 ):
-    patients = (
+    return (
         db.query(Patient)
         .order_by(Patient.patient_id.desc())
         .all()
     )
-
-    return patients

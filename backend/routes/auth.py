@@ -1,13 +1,10 @@
+from sqlalchemy import func
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from database import get_db
 from models import Patient
-from schemas import TokenResponse
-from security import create_access_token, verify_password
-
-
 from schemas import PatientProfileResponse, TokenResponse
 from security import (
     create_access_token,
@@ -21,28 +18,20 @@ router = APIRouter(
 )
 
 
-@router.post(
-    "/login",
-    response_model=TokenResponse,
-)
+@router.post("/login", response_model=TokenResponse)
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
 ):
+    email = form_data.username.strip().lower()
+
     patient = (
         db.query(Patient)
-        .filter(Patient.email == form_data.username)
+       .filter(func.lower(Patient.email) == email)
         .first()
     )
 
-    if patient is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-
-    if not verify_password(
+    if patient is None or not verify_password(
         form_data.password,
         patient.password,
     ):
@@ -61,10 +50,8 @@ def login(
         "token_type": "bearer",
     }
 
-@router.get(
-    "/me",
-    response_model=PatientProfileResponse,
-)
+
+@router.get("/me", response_model=PatientProfileResponse)
 def get_my_profile(
     current_patient: Patient = Depends(get_current_patient),
 ):
