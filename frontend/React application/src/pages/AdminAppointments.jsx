@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import adminApi from "../api/adminApi";
 import "./AdminAppointments.css";
+import "./AdminAppointments.css";
+import "./AdminManagementTheme.css";
 
 export default function AdminAppointments() {
   const navigate = useNavigate();

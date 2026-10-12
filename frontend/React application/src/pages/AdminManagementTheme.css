@@ -1,0 +1,735 @@
+
+/* ============================================
+   SMART HOSPITAL - ADMIN MANAGEMENT THEME
+   Doctors, Patients, Appointments and Queue
+   ============================================ */
+
+.admin-doctors-page,
+.admin-patients-page,
+.admin-appointments-page,
+.admin-queue-page {
+  --admin-green: #087f64;
+  --admin-dark-green: #05664f;
+  --admin-navy: #103752;
+  --admin-mint: #e5f7ee;
+  --admin-border: #dcebe6;
+  --admin-muted: #6a8090;
+
+  min-height: 100vh;
+  padding: clamp(18px, 3.5vw, 48px);
+  background:
+    radial-gradient(
+      ellipse at 100% 0%,
+      rgba(24, 180, 126, 0.12),
+      transparent 38%
+    ),
+    linear-gradient(145deg, #f0f8f5, #edf5fa);
+  color: var(--admin-navy);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.admin-doctors-page *,
+.admin-patients-page *,
+.admin-appointments-page *,
+.admin-queue-page * {
+  box-sizing: border-box;
+}
+
+/* PAGE HEADERS */
+
+.admin-doctors-header,
+.admin-patients-header,
+.admin-appointments-header,
+.admin-queue-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: clamp(24px, 3vw, 40px);
+  margin-bottom: 26px;
+  border: 1px solid #cce9dd;
+  border-radius: 24px;
+  background: linear-gradient(
+    115deg,
+    #ffffff 0%,
+    #e8f8ef 65%,
+    #d8f3e5 100%
+  );
+  box-shadow: 0 14px 36px rgba(16, 55, 82, 0.06);
+  overflow: hidden;
+}
+
+.admin-doctors-header::after,
+.admin-patients-header::after,
+.admin-appointments-header::after,
+.admin-queue-header::after {
+  content: "+";
+  position: absolute;
+  right: 18%;
+  top: -55px;
+  font-size: 240px;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(8, 127, 100, 0.045);
+  pointer-events: none;
+}
+
+.admin-doctors-header > *,
+.admin-patients-header > *,
+.admin-appointments-header > *,
+.admin-queue-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.admin-doctors-header span,
+.admin-patients-eyebrow,
+.admin-appointments-eyebrow,
+.admin-queue-eyebrow {
+  display: inline-block;
+  padding: 8px 13px;
+  border-radius: 50px;
+  background: #d9f3e5;
+  color: #087f64;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+}
+
+.admin-doctors-header h1,
+.admin-patients-header h1,
+.admin-appointments-header h1,
+.admin-queue-header h1 {
+  margin: 15px 0 9px;
+  color: #103752;
+  font-size: clamp(27px, 3vw, 42px);
+  line-height: 1.15;
+}
+
+.admin-doctors-header p,
+.admin-patients-header p,
+.admin-appointments-header p,
+.admin-queue-header p {
+  margin: 0;
+  color: #66838b;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* MATCHING GREEN BUTTONS */
+
+.admin-doctors-header button,
+.admin-patients-back,
+.admin-appointments-back,
+.admin-queue-back,
+.admin-doctor-save,
+.admin-patients-refresh,
+.admin-appointments-actions button,
+.admin-queue-actions button,
+.admin-queue-row-actions button {
+  min-height: 45px;
+  padding: 12px 19px;
+  border: 1px solid #087f64;
+  border-radius: 12px;
+  background: #087f64;
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(8, 127, 100, 0.14);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-doctors-header button:hover,
+.admin-patients-back:hover,
+.admin-appointments-back:hover,
+.admin-queue-back:hover,
+.admin-doctor-save:hover,
+.admin-patients-refresh:hover,
+.admin-appointments-actions button:hover,
+.admin-queue-actions button:hover,
+.admin-queue-row-actions button:hover {
+  background: #05664f;
+  border-color: #05664f;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(8, 127, 100, 0.2);
+}
+
+/* CONTENT CARDS */
+
+.admin-doctor-form,
+.admin-doctors-list-section,
+.admin-patients-summary,
+.admin-patients-card,
+.admin-appointments-card,
+.admin-queue-card {
+  min-width: 0;
+  border: 1px solid var(--admin-border);
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(16, 55, 82, 0.065);
+}
+
+.admin-doctor-form,
+.admin-doctors-list-section,
+.admin-patients-card,
+.admin-appointments-card,
+.admin-queue-card {
+  padding: clamp(18px, 2.2vw, 30px);
+}
+
+/* CARD TITLES */
+
+.admin-doctor-form h2,
+.admin-doctors-toolbar h2,
+.admin-patients-toolbar h2,
+.admin-appointments-toolbar h2,
+.admin-queue-toolbar h2 {
+  color: #103752;
+  font-size: clamp(20px, 2vw, 25px);
+  font-weight: 800;
+}
+
+.admin-doctors-toolbar p,
+.admin-patients-toolbar p,
+.admin-appointments-toolbar p,
+.admin-queue-toolbar p {
+  color: #718796;
+  line-height: 1.5;
+}
+
+/* FORM FIELDS AND SEARCH */
+
+.admin-doctor-form input,
+.admin-doctors-toolbar input,
+.admin-patients-search,
+.admin-appointments-actions input,
+.admin-appointments-actions select,
+.admin-queue-actions input,
+.admin-queue-actions select {
+  min-height: 46px;
+  max-width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #cdded9;
+  border-radius: 11px;
+  background: #fbfefd;
+  color: #153a4e;
+  outline: none;
+  font: inherit;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.admin-doctor-form input:focus,
+.admin-doctors-toolbar input:focus,
+.admin-patients-search:focus,
+.admin-appointments-actions input:focus,
+.admin-appointments-actions select:focus,
+.admin-queue-actions input:focus,
+.admin-queue-actions select:focus {
+  border-color: #087f64;
+  box-shadow: 0 0 0 4px rgba(8, 127, 100, 0.1);
+  background: #ffffff;
+}
+
+/* TABLES */
+
+.admin-doctors-table-wrapper,
+.admin-patients-table-wrapper,
+.admin-appointments-table-wrapper,
+.admin-queue-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #e0eee8;
+  border-radius: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: #9dcfbd #eef7f3;
+}
+
+.admin-doctors-table,
+.admin-patients-table,
+.admin-appointments-table,
+.admin-queue-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-doctors-table th,
+.admin-patients-table th,
+.admin-appointments-table th,
+.admin-queue-table th {
+  padding: 17px 15px;
+  background: #e6f5ee;
+  color: #185d4b;
+  border-bottom: 1px solid #cce8da;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.admin-doctors-table td,
+.admin-patients-table td,
+.admin-appointments-table td,
+.admin-queue-table td {
+  padding: 17px 15px;
+  border-bottom: 1px solid #e5efe9;
+  color: #244257;
+  line-height: 1.55;
+}
+
+.admin-doctors-table tbody tr:nth-child(even),
+.admin-patients-table tbody tr:nth-child(even),
+.admin-appointments-table tbody tr:nth-child(even),
+.admin-queue-table tbody tr:nth-child(even) {
+  background: #f8fcfa;
+}
+
+.admin-doctors-table tbody tr:hover,
+.admin-patients-table tbody tr:hover,
+.admin-appointments-table tbody tr:hover,
+.admin-queue-table tbody tr:hover {
+  background: #eaf8f0;
+}
+
+/* STATUS BADGES */
+
+.admin-appointment-status,
+.admin-queue-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.admin-appointment-status.completed {
+  background: #def6e9;
+  color: #087f64;
+}
+
+.admin-appointment-status.pending {
+  background: #fff3d5;
+  color: #946200;
+}
+
+.admin-appointment-status.confirmed {
+  background: #e2f0ff;
+  color: #1e63a4;
+}
+
+.admin-appointment-status.cancelled {
+  background: #ffe7e7;
+  color: #bf3333;
+}
+
+/* FEEDBACK */
+
+.admin-doctors-error,
+.admin-patients-error,
+.admin-appointments-error,
+.admin-queue-error {
+  padding: 15px 18px;
+  border: 1px solid #f7cccc;
+  border-radius: 12px;
+  background: #fff1f1;
+  color: #b72e2e;
+}
+
+.admin-doctors-empty,
+.admin-patients-message,
+.admin-appointments-message,
+.admin-queue-message {
+  padding: 35px 20px;
+  text-align: center;
+  color: #6a8090;
+}
+
+/* KEYBOARD ACCESSIBILITY */
+
+.admin-doctors-page button:focus-visible,
+.admin-patients-page button:focus-visible,
+.admin-appointments-page button:focus-visible,
+.admin-queue-page button:focus-visible {
+  outline: 3px solid #6bd9b0;
+  outline-offset: 3px;
+}
+
+/* RESPONSIVE LAYOUT */
+
+@media (max-width: 1100px) {
+  .admin-doctors-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-appointments-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-queue-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .admin-doctors-page,
+  .admin-patients-page,
+  .admin-appointments-page,
+  .admin-queue-page {
+    padding: 16px;
+  }
+
+  .admin-doctors-header,
+  .admin-patients-header,
+  .admin-appointments-header,
+  .admin-queue-header {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+
+  .admin-doctors-header button,
+  .admin-patients-back,
+  .admin-appointments-back,
+  .admin-queue-back {
+    width: 100%;
+  }
+
+  .admin-doctors-toolbar,
+  .admin-patients-toolbar,
+  .admin-appointments-toolbar,
+  .admin-queue-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-doctors-toolbar input {
+    width: 100%;
+  }
+
+  .admin-patients-actions,
+  .admin-appointments-actions,
+  .admin-queue-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .admin-patients-search,
+  .admin-patients-refresh,
+  .admin-appointments-actions input,
+  .admin-appointments-actions select,
+  .admin-appointments-actions button,
+  .admin-queue-actions input,
+  .admin-queue-actions select,
+  .admin-queue-actions button {
+    width: 100%;
+  }
+
+  .admin-appointments-stats,
+  .admin-queue-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .admin-appointments-stats,
+  .admin-queue-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-doctor-time-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-doctors-page *,
+  .admin-patients-page *,
+  .admin-appointments-page *,
+  .admin-queue-page * {
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   PAGE-SPECIFIC ENHANCEMENTS
+   ============================================ */
+
+/* DOCTORS */
+
+.admin-doctors-layout {
+  grid-template-columns: minmax(290px, 350px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.admin-doctor-form {
+  background: linear-gradient(
+    180deg,
+    #ffffff,
+    #f5fbf8
+  );
+}
+
+.admin-doctor-form h2 {
+  padding-bottom: 17px;
+  border-bottom: 2px solid #d9f1e5;
+}
+
+.admin-doctor-form label {
+  color: #214c54;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.admin-doctor-form input {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.admin-doctor-save {
+  background: linear-gradient(
+    120deg,
+    #087f64,
+    #10a87d
+  );
+}
+
+.admin-doctor-cancel-edit {
+  min-height: 44px;
+  border: 1px solid #c7ddd3;
+  border-radius: 11px;
+  background: #edf7f2;
+  color: #087f64;
+  font-weight: 800;
+}
+
+.admin-doctors-table {
+  min-width: 850px;
+}
+
+.admin-doctors-table td strong {
+  color: #103752;
+}
+
+.admin-doctor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-doctor-actions button {
+  padding: 9px 13px;
+  border-radius: 9px;
+  font-weight: 800;
+}
+
+.admin-doctor-actions button:first-child {
+  background: #087f64;
+  border: 1px solid #087f64;
+  color: #ffffff;
+}
+
+.admin-doctor-actions button:first-child:hover {
+  background: #05664f;
+}
+
+.admin-doctor-actions button:last-child {
+  background: #fff0f0;
+  border: 1px solid #f3b7b7;
+  color: #c43838;
+}
+
+.admin-doctor-actions button:last-child:hover {
+  background: #ffe0e0;
+}
+
+/* PATIENTS */
+
+.admin-patients-summary {
+  position: relative;
+  min-height: 145px;
+  padding: 27px 30px;
+  background: linear-gradient(
+    115deg,
+    #ffffff,
+    #e5f7ef
+  );
+  border-left: 5px solid #087f64;
+}
+
+.admin-patients-summary-icon {
+  width: 68px;
+  height: 68px;
+  background: #d2f0e0;
+  color: #087f64;
+  border-radius: 18px;
+}
+
+.admin-patients-summary strong {
+  color: #087f64;
+  font-size: 39px;
+}
+
+.admin-patients-name {
+  color: #103752;
+  font-weight: 800;
+}
+
+.admin-patients-email {
+  color: #087f64;
+  overflow-wrap: anywhere;
+}
+
+/* APPOINTMENTS */
+
+.admin-appointments-stat {
+  position: relative;
+  min-width: 0;
+  min-height: 140px;
+  padding: 25px;
+  overflow: hidden;
+  border: 1px solid #dcebe6;
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #f1faf6
+  );
+  box-shadow: 0 9px 26px rgba(16, 55, 82, 0.055);
+}
+
+.admin-appointments-stat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: #087f64;
+}
+
+.admin-appointments-stat:nth-child(2) {
+  background: linear-gradient(145deg, #fff, #fff8e8);
+}
+
+.admin-appointments-stat:nth-child(2)::before {
+  background: #e5a52b;
+}
+
+.admin-appointments-stat:nth-child(3) {
+  background: linear-gradient(145deg, #fff, #e5f8ee);
+}
+
+.admin-appointments-stat:nth-child(3)::before {
+  background: #10a477;
+}
+
+.admin-appointments-stat:nth-child(4) {
+  background: linear-gradient(145deg, #fff, #fff0f0);
+}
+
+.admin-appointments-stat:nth-child(4)::before {
+  background: #d76565;
+}
+
+.admin-appointments-stat strong {
+  color: #103752;
+  font-size: 36px;
+}
+
+/* QUEUE */
+
+.admin-queue-stat {
+  position: relative;
+  min-width: 0;
+  min-height: 140px;
+  padding: 23px;
+  overflow: hidden;
+  border: 1px solid #dcebe6;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 9px 26px rgba(16, 55, 82, 0.055);
+}
+
+.admin-queue-stat::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: #087f64;
+}
+
+.admin-queue-stat:nth-child(2) {
+  background: #fffaf0;
+}
+
+.admin-queue-stat:nth-child(2)::before {
+  background: #e7ae36;
+}
+
+.admin-queue-stat:nth-child(3) {
+  background: #eff7ff;
+}
+
+.admin-queue-stat:nth-child(3)::before {
+  background: #4595d5;
+}
+
+.admin-queue-stat:nth-child(4) {
+  background: #f0f1ff;
+}
+
+.admin-queue-stat:nth-child(4)::before {
+  background: #7774d7;
+}
+
+.admin-queue-stat:nth-child(5) {
+  background: #edfaf2;
+}
+
+.admin-queue-stat:nth-child(5)::before {
+  background: #12a477;
+}
+
+.admin-queue-stat strong {
+  color: #103752;
+  font-size: 34px;
+}
+
+.admin-queue-status {
+  background: #e4f1ff;
+  color: #2868a5;
+}
+
+.admin-queue-row-actions button {
+  min-height: 37px;
+  padding: 9px 13px;
+}
+
+.admin-queue-row-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* REAPPLY RESPONSIVE DOCTOR LAYOUT */
+
+@media (max-width: 1100px) {
+  .admin-doctors-layout {
+    grid-template-columns: 1fr;
+  }
+}

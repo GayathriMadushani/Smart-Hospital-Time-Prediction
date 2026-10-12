@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 
 import adminApi from "../api/adminApi";
 import "./AdminDoctors.css";
+import "./AdminDoctors.css";
+import "./AdminManagementTheme.css";
 
 const emptyForm = {
   name: "",

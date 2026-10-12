@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import adminApi from "../api/adminApi";
 import "./AdminQueue.css";
 import Swal from "sweetalert2";
+import "./AdminQueue.css";
+import "./AdminManagementTheme.css";
 
 export default function AdminQueue() {
   const navigate = useNavigate();
